@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const config = require('./config');
+const mime = require('mime'); // Pbaa7
 
 const app = express();
 const upload = multer({
@@ -36,6 +37,8 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 app.get('/uploads/:filename', (req, res) => {
     const filePath = path.join(config.uploadDir, req.params.filename);
+    const mimeType = mime.getType(filePath); // Pbaa7
+    res.setHeader('Content-Type', mimeType); // Pc368
     res.sendFile(filePath, (err) => {
         if (err) {
             res.status(404).send('File not found.');

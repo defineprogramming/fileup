@@ -17,6 +17,9 @@
     <div id="uploadStatus" style="display: none;">
         <p>Uploading...</p>
     </div>
+    <div id="errorMessage" style="display: none; color: red;">
+        <p id="errorText"></p>
+    </div>
     <script>
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -27,7 +30,10 @@
             }
 
             var uploadStatus = document.getElementById('uploadStatus');
+            var errorMessage = document.getElementById('errorMessage');
+            var errorText = document.getElementById('errorText');
             uploadStatus.style.display = 'block';
+            errorMessage.style.display = 'none';
 
             fetch('/upload', {
                 method: 'POST',
@@ -40,11 +46,13 @@
                     fileUrl.href = data.fileUrl;
                     fileLink.style.display = 'block';
                 } else {
-                    alert('File upload failed.');
+                    errorText.textContent = data.message || 'File upload failed.';
+                    errorMessage.style.display = 'block';
                 }
             }).catch(error => {
                 console.error('Error:', error);
-                alert('File upload failed.');
+                errorText.textContent = 'File upload failed due to a network error.';
+                errorMessage.style.display = 'block';
             });
         });
     </script>

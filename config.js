@@ -3,8 +3,13 @@ const path = require('path');
 
 const uploadDir = path.join(__dirname, 'uploads');
 
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
+try {
+    if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir);
+    }
+} catch (error) {
+    console.error(`Error creating upload directory: ${error.message}`);
+    process.exit(1);
 }
 
 module.exports = {

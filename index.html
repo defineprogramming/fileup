@@ -8,23 +8,32 @@
 <body>
     <h1>FileUp</h1>
     <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" name="file" id="fileInput">
+        <input type="file" name="file" id="fileInput" multiple>
         <button type="submit">Upload</button>
     </form>
     <div id="fileLink" style="display: none;">
         <p>File uploaded successfully! You can access it <a id="fileUrl" href="#" target="_blank">here</a>.</p>
+    </div>
+    <div id="uploadStatus" style="display: none;">
+        <p>Uploading...</p>
     </div>
     <script>
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();
             var formData = new FormData();
             var fileInput = document.getElementById('fileInput');
-            formData.append('file', fileInput.files[0]);
+            for (var i = 0; i < fileInput.files.length; i++) {
+                formData.append('file', fileInput.files[i]);
+            }
+
+            var uploadStatus = document.getElementById('uploadStatus');
+            uploadStatus.style.display = 'block';
 
             fetch('/upload', {
                 method: 'POST',
                 body: formData
             }).then(response => response.json()).then(data => {
+                uploadStatus.style.display = 'none';
                 if (data.success) {
                     var fileLink = document.getElementById('fileLink');
                     var fileUrl = document.getElementById('fileUrl');

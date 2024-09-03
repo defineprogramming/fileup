@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FileUp - Upload your files</title>
+    <link rel="stylesheet" href="public/styles.css">
 </head>
 <body>
-    <h1>FileUp</h1>
-    <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" name="file" id="fileInput" multiple>
-        <button type="submit">Upload</button>
+    <h1 class="title">FileUp</h1>
+    <form id="uploadForm" enctype="multipart/form-data" class="upload-form">
+        <input type="file" name="file" id="fileInput" multiple class="file-input">
+        <button type="submit" class="upload-button">Upload</button>
     </form>
-    <div id="fileLink" style="display: none;">
+    <div id="fileLink" class="file-link" style="display: none;">
         <p>File uploaded successfully! You can access it <a id="fileUrl" href="#" target="_blank">here</a>.</p>
     </div>
-    <div id="uploadStatus" style="display: none;">
+    <div id="uploadStatus" class="upload-status" style="display: none;">
         <p>Uploading...</p>
     </div>
-    <div id="errorMessage" style="display: none; color: red;">
+    <div id="errorMessage" class="error-message" style="display: none;">
         <p id="errorText"></p>
     </div>
     <script>
